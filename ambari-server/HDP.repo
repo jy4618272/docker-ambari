@@ -1,0 +1,6 @@
+[HDP-2.2]
+name=HDP
+baseurl=http://192.168.199.150/HDP/centos6/2.x/GA/2.2.0.0
+path=/
+enabled=1
+gpgcheck=0
