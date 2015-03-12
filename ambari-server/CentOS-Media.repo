@@ -1,0 +1,6 @@
+[c6-media]
+name=CentOS-$releasever - Media
+baseurl=file:///media/CentOS_6.5_Final/
+gpgcheck=0
+enabled=1
+gpgkey=file:///media/CentOS_6.5_Final/RPM-GPG-KEY-CentOS-6
