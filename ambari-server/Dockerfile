@@ -37,14 +37,6 @@ RUN sed -i "/pam_limits/ s/^/#/" /etc/pam.d/*
 #RUN /tmp/download-warmup-deps.sh
 #RUN yum install -y ambari-log4j hadoop hadoop-libhdfs hadoop-lzo hadoop-lzo-native hadoop-mapreduce hadoop-mapreduce-historyserver hadoop-yarn hadoop-yarn-nodemanager hadoop-yarn-proxyserver hadoop-yarn-resourcemanager lzo net-snmp net-snmp-utils snappy snappy-devel unzip zookeeper hbase
 
-# centos本地源，先把所有的都备份起来
-RUN mkdir /etc/backup
-RUN mv /etc/yum.repos.d/* /etc/backup
-ADD CentOS-Media.repo /etc/yum.repos.d/
-# 增加本地源
-ADD HDP.repo /etc/yum.repos.d/
-ADD HDP-UTILS.repo /etc/yum.repos.d/
-
 # add ambari shell to the image so new users don't need the 1GB java image
 # RUN curl -o /tmp/ambari-shell.jar https://s3-eu-west-1.amazonaws.com/maven.sequenceiq.com/releases/com/sequenceiq/ambari-shell/0.1.23/ambari-shell-0.1.23.jar
 RUN curl -o /tmp/ambari-shell.jar http://192.168.199.150/ambari-shell-0.1.23.jar
@@ -82,6 +74,14 @@ RUN sed -i "s/agent.task.timeout=900/agent.task.timeout=2000/" /etc/ambari-serve
 RUN mkdir -p /root/.ssh && chown root.root /root && chmod 700 /root/.ssh 
 EXPOSE 22
 RUN echo 'root:123' | chpasswd
+
+# centos本地源，先把所有的都备份起来
+RUN mkdir /etc/backup
+RUN mv /etc/yum.repos.d/* /etc/backup
+ADD CentOS-Media.repo /etc/yum.repos.d/
+# 增加本地源
+ADD HDP.repo /etc/yum.repos.d/
+ADD HDP-UTILS.repo /etc/yum.repos.d/
 
 EXPOSE 8080
 ENTRYPOINT ["/usr/local/serf/bin/start-serf-agent.sh"]
