@@ -38,9 +38,8 @@ RUN sed -i "/pam_limits/ s/^/#/" /etc/pam.d/*
 #RUN yum install -y ambari-log4j hadoop hadoop-libhdfs hadoop-lzo hadoop-lzo-native hadoop-mapreduce hadoop-mapreduce-historyserver hadoop-yarn hadoop-yarn-nodemanager hadoop-yarn-proxyserver hadoop-yarn-resourcemanager lzo net-snmp net-snmp-utils snappy snappy-devel unzip zookeeper hbase
 
 # centos本地源，先把所有的都备份起来
-RUN cd /etc/yum.repos.d
 RUN mkdir /etc/backup
-RUN mv * /etc/backup
+RUN mv /etc/yum.repos.d/* /etc/backup
 ADD CentOS-Media.repo /etc/yum.repos.d/
 # 增加本地源
 ADD HDP.repo /etc/yum.repos.d/
