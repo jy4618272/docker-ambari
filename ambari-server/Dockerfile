@@ -10,10 +10,11 @@ MAINTAINER SequenceIQ
 ADD ambari.repo /etc/yum.repos.d/
 RUN yum install -y ambari-server ambari-agent
 RUN yum install -y tar git curl
-RUN ambari-server setup --silent
 
 # 直接从本地源中下载jdk
 RUN curl -o /var/lib/ambari-server/resources/jdk-7u67-linux-x64.tar.gz http://192.168.199.150/jdk-7u67-linux-x64.tar.gz
+
+RUN ambari-server setup --silent
 
 # 将http://public-repo-1.hortonworks.com/HDP/centos6/2.x/GA/2.2.0.0替换成http://192.168.199.150/HDP/centos6/2.x/GA/2.2.0.0，仅将域名换成对应IP即可。
 RUN sed -i "s/public-repo-1.hortonworks.com/192.168.199.150/g" /var/lib/ambari-server/resources/stacks/HDP/2.2/repos/repoinfo.xml
